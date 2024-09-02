@@ -20,7 +20,11 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
         with:
+<<<<<<< HEAD
           region: ap-south-1  # Specify your AWS region here
+=======
+          region: ap-south-1  
+>>>>>>> 0abfca353e24e90d2d82303c741ce8f87f6c5807
 
       - name: Build and Push Docker image
         env:
