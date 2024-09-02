@@ -20,15 +20,15 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
         with:
-          region: ap-south-1  # Specify your AWS region here
+          region: ap-south-1  # Ensure your AWS region is correct
 
       - name: Build and Push Docker image
-        env:
-          AWS_REGION: ap-south-1  # Set AWS region as an environment variable
         run: |
           docker build -t hello-world-app .
           docker tag hello-world-app:latest ${{ steps.login-ecr.outputs.registry }}/hello-world-app:latest
           docker push ${{ steps.login-ecr.outputs.registry }}/hello-world-app:latest
+        env:
+          AWS_REGION: ap-south-1
 
       - name: Deploy to ECS
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
@@ -37,5 +37,4 @@ jobs:
           service: hello-world-service
           cluster: hello-world-cluster
           wait-for-service-stability: true
-        env:
-          AWS_REGION: ap-south-1  # Set AWS region as an environment variable
+          region: ap-south-1  # Specify the AWS region explicitly here
