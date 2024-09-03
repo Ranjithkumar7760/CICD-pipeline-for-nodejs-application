@@ -20,17 +20,17 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}  # Use the secret stored in GitHub
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}  # Use the secret stored in GitHub
-          AWS_REGION: ap-south-1  # Set the AWS region as an environment variable
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ap-south-1
 
       - name: Build and Push Docker image
         run: |
-          docker build -t hello-world-app .
+          docker build -t hello-world-app ./app  # Adjust the path to where your Dockerfile is located
           docker tag hello-world-app:latest ${{ steps.login-ecr.outputs.registry }}/hello-world-app:latest
           docker push ${{ steps.login-ecr.outputs.registry }}/hello-world-app:latest
         env:
-          AWS_REGION: ap-south-1  # Ensure the AWS region is set
+          AWS_REGION: ap-south-1
 
       - name: Deploy to ECS
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
@@ -40,6 +40,6 @@ jobs:
           cluster: hello-world-cluster
           wait-for-service-stability: true
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}  # Use the secret stored in GitHub
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}  # Use the secret stored in GitHub
-          AWS_REGION: ap-south-1  # Set the AWS region as an environment variable
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ap-south-1
