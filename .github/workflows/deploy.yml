@@ -26,7 +26,7 @@ jobs:
 
       - name: Build and Push Docker image
         run: |
-          docker build -t hello-world-app .
+          docker build -t hello-world-app ./hello-world-app  # Adjust the path to where your Dockerfile is located
           docker tag hello-world-app:latest ${{ steps.login-ecr.outputs.registry }}/hello-world-app:latest
           docker push ${{ steps.login-ecr.outputs.registry }}/hello-world-app:latest
         env:
