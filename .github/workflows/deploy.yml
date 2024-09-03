@@ -27,8 +27,8 @@ jobs:
       - name: Build and Push Docker image
         run: |
           docker build -t node-project ./hello-world-app  # Adjust the path to where your Dockerfile is located
-          docker tag node-project:latest ${{ stepsloginecroutputsregistry }}/node-project:latest
-          docker push ${{ stepsloginecroutputsregistry }}/node-project:latest
+          docker tag node-project:latest ${{ steps.login-ecr.outputs.registry }}/node-project:latest
+          docker push ${{ steps.login-ecr.outputs.registry }}/node-project:latest
         env:
           AWS_REGION: ap-south-1
 
