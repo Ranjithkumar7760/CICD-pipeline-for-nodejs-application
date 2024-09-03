@@ -1,20 +1,20 @@
-# Use the official Node.js image
+# Use the official Node.js image.
 FROM node:14-alpine
 
-# Set the working directory inside the container
+# Set the working directory.
 WORKDIR /app
 
-# Copy only the package.json and package-lock.json files to leverage Docker cache
+# Copy the package.json and package-lock.json files.
 COPY package*.json ./
 
-# Install dependencies
+# Install dependencies.
 RUN npm install
 
-# Copy the rest of the application code
+# Copy the rest of the application.
 COPY . .
 
-# Expose the port the app runs on
+# Expose the port the app runs on.
 EXPOSE 3000
 
-# Command to run the application
+# Define the command to run the application.
 CMD ["node", "app.js"]
