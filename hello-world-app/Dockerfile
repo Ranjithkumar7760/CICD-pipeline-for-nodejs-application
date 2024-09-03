@@ -1,11 +1,10 @@
-FROM node:16-alpine
+FROM node:14-alpine
 
 WORKDIR /app
 
 COPY package*.json ./
 
-# Install dependencies with verbose logging and retry if it fails
-RUN npm install --loglevel verbose || npm install --loglevel verbose --unsafe-perm
+RUN npm install
 
 COPY . .
 
