@@ -12,6 +12,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          lfs: true  # Enable Git LFS support
+
+      - name: Install Git LFS
+        run: |
+          apt-get update
+          apt-get install git-lfs
+          git lfs install
+          git lfs pull
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -26,7 +35,7 @@ jobs:
 
       - name: Build and Push Docker image
         run: |
-          docker build -t node-project ./hello-world-app  # Adjust the path to where your Dockerfile is located
+          docker build -t node-project ./hello-world-app
           docker tag node-project:latest ${{ steps.login-ecr.outputs.registry }}/node-project:latest
           docker push ${{ steps.login-ecr.outputs.registry }}/node-project:latest
         env:
